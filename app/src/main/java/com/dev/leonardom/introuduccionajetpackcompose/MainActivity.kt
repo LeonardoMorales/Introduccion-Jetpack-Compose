@@ -18,9 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import com.dev.leonardom.introuduccionajetpackcompose.ui.theme.IntrouduccionAJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,27 +37,54 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Figure(color: Color) {
-    Box(
-        modifier = Modifier
-            .width(50.dp)
-            .height(50.dp)
-            .clip(CircleShape)
-            .background(color)
-    )
-}
-
-@Composable
 fun SimpleComposable() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Figure(color = Color.Red)
-        Figure(color = Color.Green)
-        Figure(color = Color.Blue)
+    val constraints = ConstraintSet {
+        val greenBox = createRefFor("greenBox")
+        val redBox = createRefFor("redBox")
+        val blueBox = createRefFor("blueBox")
+        val guideline = createGuidelineFromStart(0.5f)
+
+        constrain(greenBox) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            width = Dimension.value(100.dp)
+            height = Dimension.value(100.dp)
+        }
+
+        constrain(redBox) {
+            top.linkTo(greenBox.bottom)
+            start.linkTo(guideline)
+            width = Dimension.value(100.dp)
+            height = Dimension.value(100.dp)
+        }
+
+        constrain(blueBox) {
+            top.linkTo(redBox.bottom)
+            bottom.linkTo(parent.bottom)
+            start.linkTo(parent.start)
+            width = Dimension.value(100.dp)
+            height = Dimension.value(100.dp)
+        }
+
+        createVerticalChain(greenBox, redBox, blueBox)
+    }
+
+    ConstraintLayout(constraints, modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .background(Color.Green)
+                .layoutId("greenBox")
+        )
+        Box(
+            modifier = Modifier
+                .background(Color.Red)
+                .layoutId("redBox")
+        )
+        Box(
+            modifier = Modifier
+                .background(Color.Blue)
+                .layoutId("blueBox")
+        )
     }
 }
 
