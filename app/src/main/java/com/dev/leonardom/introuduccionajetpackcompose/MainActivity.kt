@@ -40,33 +40,36 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun SimpleComposable() {
-    var num by rememberSaveable { mutableStateOf(0) }
+    var num by remember { mutableStateOf(0) }
 
     Column {
-        Text("Conteo: $num")
+        Text(text = "Conteo : $num")
 
-        Text("Conteo 2: ${100 - num}")
+        Divider(thickness = 20.dp, color = Color.White)
 
-        Divider(thickness = 20.dp, color = Color.Transparent)
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+            Counter(
+                "Aumentar Conteo",
+                updateCount = { num++ }
+            )
 
-        Counter(
-            updateCount = {
-                num++
-            }
-        )
+            Counter(
+                "Disminuir Conteo",
+                updateCount = { num-- }
+            )
+        }
     }
 }
 
 @Composable
 fun Counter(
+    btnTitulo: String,
     updateCount: () -> Unit
 ) {
     Button(
-        onClick = {
-            updateCount()
-        }
+        onClick = { updateCount() }
     ) {
-        Text("Actualizar Conteo")
+        Text(btnTitulo)
     }
 }
 
