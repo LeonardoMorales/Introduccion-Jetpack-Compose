@@ -75,4 +75,8 @@ dependencies {
     implementation "androidx.activity:activity-compose:$compose_activity"
 
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha06"
+
+    // Navigation
+    def nav_compose = "2.4.0-alpha05"
+    implementation "androidx.navigation:navigation-compose:$nav_compose"
 }
