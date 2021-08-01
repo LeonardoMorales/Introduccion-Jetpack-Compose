@@ -11,6 +11,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dev.leonardom.introuduccionajetpackcompose.navigation.Destinations
+import com.dev.leonardom.introuduccionajetpackcompose.navigation.currentRoute
 
 @Composable
 fun BottomNavigationBar(
@@ -41,10 +42,4 @@ fun BottomNavigationBar(
             )
         }
     }
-}
-
-@Composable
-private fun currentRoute(navController: NavHostController): String? {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    return navBackStackEntry?.destination?.route
 }
