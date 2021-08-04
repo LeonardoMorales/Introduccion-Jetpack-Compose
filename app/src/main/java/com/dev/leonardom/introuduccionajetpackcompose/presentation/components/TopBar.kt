@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 fun TopBar(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
-    openDialog: () -> Unit
+    openDialog: () -> Unit,
+    displaySnackBar: () -> Unit
 ) {
     TopAppBar(
         title = { Text(LocalContext.current.getString(R.string.app_name)) },
@@ -29,7 +30,7 @@ fun TopBar(
         },
         actions = {
             IconButton(onClick = {
-                // TODO: Display SnackBar
+                displaySnackBar()
             }) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
             }

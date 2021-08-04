@@ -1,6 +1,7 @@
 package com.dev.leonardom.introuduccionajetpackcompose.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
@@ -17,6 +18,7 @@ import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.Bo
 import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.Dialog
 import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.Drawer
 import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.TopBar
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,9 +53,31 @@ fun MainScreen() {
         } },
         isFloatingActionButtonDocked = false,
         floatingActionButtonPosition = FabPosition.End,
-        topBar = { TopBar(scope, scaffoldState) {
-            openDialog.value = true
-        } },
+        topBar = {
+            TopBar(
+                scope,
+                scaffoldState,
+                openDialog = { openDialog.value = true  },
+                displaySnackBar = {
+                    scope.launch {
+                        val resultado = scaffoldState.snackbarHostState.showSnackbar(
+                            message = "Nuevo SnackBar!",
+                            duration = SnackbarDuration.Short,
+                            actionLabel = "Aceptar"
+                        )
+
+                        when(resultado){
+                            SnackbarResult.ActionPerformed -> {
+                                Log.d("MainActivity", "Snackbar Accionado")
+                            }
+                            SnackbarResult.Dismissed -> {
+                                Log.d("MainActivity", "Snackbar Ignorado")
+                            }
+                        }
+                    }
+                }
+            )
+       },
         drawerContent = { Drawer(scope, scaffoldState, navController, items = navigationItems) },
         drawerGesturesEnabled = true
     ){
