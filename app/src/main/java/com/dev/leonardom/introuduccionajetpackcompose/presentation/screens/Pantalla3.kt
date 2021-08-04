@@ -1,9 +1,7 @@
 package com.dev.leonardom.introuduccionajetpackcompose.presentation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,17 +12,37 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dev.leonardom.introuduccionajetpackcompose.navigation.Destinations
+import com.dev.leonardom.introuduccionajetpackcompose.ui.theme.Montserrat
 
 @Composable
 fun Pantalla3() {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Pantalla 3",
-            style = TextStyle(color = Color.Black, fontSize = 42.sp, fontWeight = FontWeight.Black)
+            style = MaterialTheme.typography.caption
         )
+        Spacer(modifier = Modifier
+            .height(8.dp)
+            .fillMaxWidth())
+        Text(
+            text = "Pantalla 3",
+            style = MaterialTheme.typography.subtitle1
+        )
+        Spacer(modifier = Modifier
+            .height(8.dp)
+            .fillMaxWidth())
+        Text(
+            text = "Pantalla 3",
+            style = MaterialTheme.typography.h3
+        )
+        Spacer(modifier = Modifier
+            .height(8.dp)
+            .fillMaxWidth())
     }
 }

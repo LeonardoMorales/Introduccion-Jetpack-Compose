@@ -40,7 +40,7 @@ fun IntrouduccionAJetpackComposeTheme(
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = AppTypography,
         shapes = Shapes,
         content = content
     )
