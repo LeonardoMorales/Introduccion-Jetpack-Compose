@@ -7,10 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.navigation.compose.rememberNavController
 import com.dev.leonardom.introuduccionajetpackcompose.navigation.Destinations.*
 import com.dev.leonardom.introuduccionajetpackcompose.navigation.NavigationHost
@@ -18,20 +15,38 @@ import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.Bo
 import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.Dialog
 import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.Drawer
 import com.dev.leonardom.introuduccionajetpackcompose.presentation.components.TopBar
+import com.dev.leonardom.introuduccionajetpackcompose.ui.theme.BLUE800
+import com.dev.leonardom.introuduccionajetpackcompose.ui.theme.IntrouduccionAJetpackComposeTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen()
+            val systemUiController = rememberSystemUiController()
+            val darkMode = remember { mutableStateOf(false) }
+
+            SideEffect {
+                systemUiController.setStatusBarColor(
+                    color = BLUE800
+                )
+            }
+
+            IntrouduccionAJetpackComposeTheme(
+                darkTheme = darkMode.value
+            ){
+                MainScreen(darkMode)
+            }
         }
     }
 }
 
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    darkMode: MutableState<Boolean>
+) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState(
         drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -81,7 +96,7 @@ fun MainScreen() {
         drawerContent = { Drawer(scope, scaffoldState, navController, items = navigationItems) },
         drawerGesturesEnabled = true
     ){
-        NavigationHost(navController)
+        NavigationHost(navController, darkMode)
     }
 
     Dialog(showDialog = openDialog.value, dismissDialog = { openDialog.value = false })
