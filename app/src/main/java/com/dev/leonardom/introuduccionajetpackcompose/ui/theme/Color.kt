@@ -28,3 +28,5 @@ val CYAN800 = Color(0xff428e92)  // SecondaryVariant
 val BLUEGREY900 = Color(0xff000a12)  // Background
 val BLUEGREY800 = Color(0xff263238)  // Surface
 val RED800 = Color(0xffba000d)  //Error
+
+val ANDROIDCOLOR = Color(0xFF46E68D)
